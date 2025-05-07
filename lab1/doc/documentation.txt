@@ -1,0 +1,66 @@
+Test Case 1:
+Test the ability to spot invalid url
+Command:
+"./myweb www.example.com invalid_url"
+The output should be
+"Invalid URL format. Expected format: IP/path"
+It shouldn't create output.dat
+
+Test Case 2:
+Test the ability to spot invalid server
+Command:
+"./myweb www.invalid.com 192.0.2.1:80/html"
+Since this is unreachable, so the output shoul be
+"Connection timed out"
+
+Test Case 3:
+Test the ability to spot non-existent path
+Command:
+"./myweb www.example.com 93.184.216.34:80/nonexistent.html"
+since it follows the correct GET format it will output to output.dat
+however it would says this on the first line of output.dat
+"HTTP/1.1 404 Not Found"
+
+Test Case 4:
+Test the ability to spot invalid hostname
+Command:
+"./myweb invalid-hostname 93.184.216.34:80/index.html"
+It creates an output.dat however, its output.dat look like this
+HTTP/1.1 404 Not Found
+Content-Type: text/html
+Date: Thu, 16 Jan 2025 00:35:42 GMT
+Server: ECS (lac/55B0)
+Content-Length: 345
+Connection: close
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>404 - Not Found</title>
+	</head>
+	<body>
+		<h1>404 - Not Found</h1>
+	</body>
+</html>
+
+
+Test Case 5:
+Testing HEAD or the -h command
+Command:
+"./bin/myweb www.example.com 93.184.216.34:80/index.html -h"
+the result would look like this on the terminal
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Age: 281404
+Cache-Control: max-age=604800
+Content-Type: text/html; charset=UTF-8
+Date: Thu, 16 Jan 2025 00:39:20 GMT
+Etag: "3147526947"
+Expires: Thu, 23 Jan 2025 00:39:20 GMT
+Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+Server: ECS (lac/55B0)
+X-Cache: HIT
+Content-Length: 1256
+Connection: close
